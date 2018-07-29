@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import static model.Post.TABLE_NAME;
 
@@ -19,7 +20,7 @@ public class Post {
     private static final String UPDATING_DATE_COLUMN = "updated";
     private static final String IMAGE_URL_COLUMN = "image_path";
     private static final String IS_VISIBLE_COLUMN = "is_visible";
-
+    private static final String AUTHOR_ID = "author_id";
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_seq_gen")
@@ -50,6 +51,10 @@ public class Post {
     @Column(name = IS_VISIBLE_COLUMN)
     private Boolean visible;
 
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+    @JoinColumn(table = User.TABLE_NAME, name = AUTHOR_ID)
+    private User author;
+
     public Post() {
     }
 
@@ -64,6 +69,42 @@ public class Post {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return id == post.id;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", summary='" + summary + '\'' +
+                ", description='" + description + '\'' +
+                ", image_url='" + image_url + '\'' +
+                ", dateOfCreating=" + dateOfCreating +
+                ", dateOfUpdating=" + dateOfUpdating +
+                ", visible=" + visible +
+                ", author=" + author +
+                '}';
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public void setId(int id) {

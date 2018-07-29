@@ -12,6 +12,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import java.util.Objects;
+
 import static model.User.TABLE_NAME;
 import static model.User.USER_ENUM_NAME;
 
@@ -43,8 +45,8 @@ public class User {
     @Id
     @NotNull
     @Column(name = ID_COLUMN, unique = true)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq_gen")
-    @SequenceGenerator(name = "users_seq_gen", sequenceName = "users_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @SequenceGenerator(name = "users_seq_gen", sequenceName = "users_id_seq", allocationSize = 1)
     private int id;
 
     @Size(min = MIN_NAME_LENGTH, max = MAX_NAME_LENGHT)
@@ -91,6 +93,34 @@ public class User {
         this.photoURL = photoURL;
         this.role = role;
         this.active = active;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", photoURL='" + photoURL + '\'' +
+                ", role=" + role +
+                ", active=" + active +
+                '}';
     }
 
     public int getId() {
