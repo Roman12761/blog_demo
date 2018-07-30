@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import java.util.List;
 import java.util.Objects;
 
 import static model.User.TABLE_NAME;
@@ -81,6 +82,10 @@ public class User {
 
     @Column(name = IS_ACTIVE_COLUMN)
     private boolean active;
+
+//    @OneToMany
+//    @JoinColumn
+//    private List<Post> posts;
 
     public User() {
     }

@@ -1,8 +1,8 @@
 package dao;
 
 public interface Dao<T> {
-    T create(T t);
-    T update(T t);
+    int create(T t);
+    void update(T t);
     void delete(T t);
-    T getById(int id);
+    T getById(Class<T> tClass, int id);
 }

@@ -51,7 +51,7 @@ public class Post {
     @Column(name = IS_VISIBLE_COLUMN)
     private Boolean visible;
 
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(table = User.TABLE_NAME, name = AUTHOR_ID)
     private User author;
 

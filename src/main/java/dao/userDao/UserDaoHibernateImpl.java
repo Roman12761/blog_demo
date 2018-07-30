@@ -1,44 +1,33 @@
 package dao.userDao;
 
 import dao.Dao;
+import dao.HibernateDaoTemplate;
+import model.Post;
 import model.User;
 import org.hibernate.Session;
 import utils.HibernateSessionFactory;
 
 public class UserDaoHibernateImpl implements UserDao {
 
+    private static HibernateDaoTemplate<User> hibernateTemplate = new HibernateDaoTemplate<>();
+
     @Override
-    public User create(User user) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        session.beginTransaction();
-        user.setId((int) session.save(user));
-        session.getTransaction().commit();
-        session.close();
-        return user;
+    public int create(User user) {
+        return hibernateTemplate.create(user);
     }
 
     @Override
-    public User update(User user) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.update(user);
-        session.getTransaction().commit();
-        session.close();
-        return user;
+    public void update(User user) {
+        hibernateTemplate.update(user);
     }
 
     @Override
     public void delete(User user) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.delete(user);
-        session.getTransaction().commit();
-        session.close();
+        hibernateTemplate.delete(user);
     }
 
     @Override
-    public User getById(int id) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        return session.get(User.class, id);
+    public User getById(Class<User> userClass, int id) {
+        return hibernateTemplate.getById(userClass, id);
     }
 }
