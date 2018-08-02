@@ -46,9 +46,9 @@ public class User {
     @Id
     @NotNull
     @Column(name = ID_COLUMN, unique = true)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-//    @SequenceGenerator(name = "users_seq_gen", sequenceName = "users_id_seq", allocationSize = 1)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq_gen")
+    @SequenceGenerator(name = "users_seq_gen", sequenceName = "users_id_seq", allocationSize = 1)
+    private Integer id;
 
     @Size(min = MIN_NAME_LENGTH, max = MAX_NAME_LENGHT)
     @Column(name = NAME_COLUMN)
@@ -90,11 +90,11 @@ public class User {
     public User() {
     }
 
-    public User(int id, String name, String login, String password, String photoURL, UserRole role, boolean active) {
-        this.id = id;
+    public User(@Size(min = MIN_NAME_LENGTH, max = MAX_NAME_LENGHT) String name, @NotNull @NotBlank @Size(min = 3, max = 10) String login, @NotNull @NotBlank @Size(min = 6, max = 17) String password, @NotNull @Email String email, String photoURL, @NotNull UserRole role, boolean active) {
         this.name = name;
         this.login = login;
         this.password = password;
+        this.email = email;
         this.photoURL = photoURL;
         this.role = role;
         this.active = active;
@@ -128,11 +128,11 @@ public class User {
                 '}';
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

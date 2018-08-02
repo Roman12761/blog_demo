@@ -4,7 +4,7 @@ import model.User;
 import org.hibernate.Session;
 import utils.HibernateSessionFactory;
 
-public class HibernateDaoTemplate<T>{
+public abstract class HibernateDaoTemplate<T> implements Dao<T>{
     public int create(T t) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         session.beginTransaction();

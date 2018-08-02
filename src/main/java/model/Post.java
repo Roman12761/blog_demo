@@ -21,12 +21,13 @@ public class Post {
     private static final String IMAGE_URL_COLUMN = "image_path";
     private static final String IS_VISIBLE_COLUMN = "is_visible";
     private static final String AUTHOR_ID = "author_id";
+
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_seq_gen")
     @SequenceGenerator(name = "post_seq_gen", sequenceName = "post_id_seq", allocationSize = 1)
     @Column(name = ID_COLUMN)
-    private int id;
+    private Integer id;
 
     @NotNull
     @NotBlank
@@ -52,7 +53,7 @@ public class Post {
     private Boolean visible;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(table = User.TABLE_NAME, name = AUTHOR_ID)
+    @JoinColumn(name = AUTHOR_ID)
     private User author;
 
     public Post() {
@@ -67,7 +68,7 @@ public class Post {
         this.visible = visible;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -107,7 +108,7 @@ public class Post {
         this.author = author;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
